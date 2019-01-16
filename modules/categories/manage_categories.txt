@@ -1,0 +1,66 @@
+﻿<?php
+    if(isset($_SESSION['valid_login'])){
+        if($_SESSION['user_type'] == 0){
+            unset($_SESSION['ei']);
+            $array_product = url_searchproduct(1);
+            $select_query = "SELECT * FROM categories";
+            $result = mysqli_query($con,$select_query.$array_product['query']) or die ("Error at query 1 : ".mysqli_error($con));
+            $count_row = mysqli_num_rows($result);
+        }else{
+            echo "<script type='text/javascript'>
+                window.location=\"index.php\";
+                </script>";
+        }
+    }else{
+        echo "<script type='text/javascript'>
+                window.location=\"index.php\";
+                </script>";
+    }
+
+?>
+    <div class='center-align' style='padding:25px 25px;'>
+        <?php 
+            echo "<h3>แสดงข้อมูลรายการประเภทสินค้าทั้งหมด</h3>";
+            echo "<h4 style='display:inline;'>ประเภทสินค้าทั้งหมดมีทั้งหมด </h4><h4 class='red-text' style='display:inline;'>".$count_row."</h4> <h4 style='display:inline;'>รายการ</h4>";
+        ?>
+        <?php
+            if(mysqli_num_rows($result) >= 1){
+                
+        ?>
+        <div class="fixed-action-btn"> 
+            <a href="index.php?module=categories&action=insert_categories_form" class="btn-floating btn-large waves-effect waves-light teal"><i class="material-icons">add</i></a>
+        </div>
+        <div style="overflow-x:auto;">
+            <table class="striped striped2 white z-depth-1" style='margin-top:30px;'>
+                <thead>
+                    <tr>
+                        <th width="700px;" style='padding-left:20px;'>ประเภทสินค้า</th>
+                        <th>แก้ไข</th>
+                        <th>ลบ</th>
+                    </tr>
+                </thead>
+                <?php  
+                    while(list($cate_id,$cate_name) = mysqli_fetch_row($result)){
+                        echo "<tr>";
+                        echo "<td style='padding-left:20px;'><a href='index.php?module=products&action=manage_product&cateid=".$cate_id."'>".$cate_name."</a></td>";
+                        echo "<td><a href='index.php?module=categories&action=edit_categories_form&catID=".$cate_id."'><img src='../images/ic_edit.png'></a></td>";
+                        echo "<td><a href='index.php?module=categories&action=delete_categories&catID=".$cate_id."' onclick='return confirm(\"คุณต้องการจะลบหรือไม่ ?\")'><img src='../images/ic_delete.png'></a></td>";
+                        echo "</tr>";
+                    }
+                ?>
+                </tr>
+            </table>
+        </div>
+        <?php
+        echo "</div>";
+        }else{
+                echo "<div class='card-panel teal lighten-2'>";
+                echo "<h5>ไม่พบข้อมูลที่ค้นหา</h5>";
+                echo "</div>";
+            }
+        ?>
+    </div>
+<?php
+    mysqli_free_result($result);
+    mysqli_close($con);
+?>

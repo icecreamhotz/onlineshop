@@ -1,0 +1,42 @@
+﻿<?php 
+    if(isset($_POST['submit']) ){
+        $product_ship = $_POST['rd_country'];
+        $query_pic = "";
+        empty($product_ship) ? $product_ship = '0' : $product_ship = '1';
+        if(!empty($_FILES['product_pic']['name'])){
+            $tmp_name = $_FILES['product_pic']['tmp_name']; // address tmp file
+            $pic_name = $_FILES['product_pic']['name']; // filename
+        
+            $char = str_shuffle("biyttiigfnbgetohteieimviriiiwi00025145_");
+            $time = str_shuffle(date("YmdHis"));
+        
+            $sum_char = substr("$char.$time",0,15);
+        
+            $pic_name = $sum_char.$pic_name;
+            $query_pic = "product_pic = '".$pic_name."',";
+        
+            copy($tmp_name,"../images/".$pic_name); //copy tmp file to folder img
+        }
+
+        $update_query = "UPDATE products SET product_title ='".$_POST['txt_productName']."',
+        product_detail = '".$_POST['txt_productDetail']."',
+        product_nprice = '".$_POST['txt_priceCommon']."',
+        product_sprice = '".$_POST['txt_priceSpecial']."',
+        product_cate = '".$_POST['product_cate']."',
+        $query_pic
+        product_ship = '".$_POST['rd_country']."' WHERE product_id = '".$_POST['product_id']."'";
+
+        $link = "&page=".$_GET['page'].(isset($_GET['cateid']) ? "&cateid=".$_GET['cateid'] : "");
+
+        mysqli_query($con,$update_query);   
+        mysqli_close($con);
+        echo "<script type='text/javascript'>";
+        echo "alert('แก้ไขข้อมูลสำเร็จ !!!');";
+        echo "window.location.href = 'index.php?module=products&action=manage_product".$link."'";
+        echo "</script>";
+    }else{
+        echo "<script type='text/javascript'>";
+        echo "window.location = 'index.php?module=products&action=manage_product'";
+        echo "</script>";
+    }
+?>

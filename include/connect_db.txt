@@ -1,0 +1,4 @@
+﻿<?php
+    $con = mysqli_connect("localhost","cistrain_l3est","bestzapper1b","cistrain_l3est"); // connect database
+    mysqli_set_charset($con,"utf8"); // encryption encoding type utf8
+?>

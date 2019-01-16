@@ -1,0 +1,53 @@
+﻿<?php
+    if(isset($_SESSION['valid_login'])){
+        switch($_SESSION['user_type']){
+            case 0: 
+                admin_menu(); 
+                break;
+            case 1:
+                member_menu();
+                break;
+        }
+    }else{
+        user_menu();
+    }
+    
+    function admin_menu(){
+        echo "<h4 class='center-align' style='color:#00bfa5;'>เมนูผู้ดูแลระบบ</h2>";
+        echo "<li><div class='user-view'>
+        <div class='background' style='background-color:#00bfa5;'>
+        </div>
+        <i class='large material-icons center-align' style='font-size:3.5rem !important;color:#e53935;'>person</i>
+        <span class='white-text center-align name'>สวัสดีครับคุณ ".(isset($_SESSION['valid_login']) ? $_SESSION['valid_login'] : "")."</span>
+        <span class='white-text center-align email'>สถานะของคุณคือ ".(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0 ? "ผู้ดูแลระบบ" : "ผู้ใช้งานระบบ")."</span>
+    </div></li>";
+        echo "<li class='",(empty($_GET['module']) ? "activeadmin" : ""),"'><a href='index.php' class='waves-effect waves-teal'><i class='material-icons ",(empty($_GET['module']) ? "white-text" : ""),"'>home</i>หน้าหลัก</a></li>";
+        echo "<li class='",($_GET['module']=='products' ? "activeadmin" : ""),"'><a href='index.php?module=products&action=manage_product' class='waves-effect waves-teal'><i class='material-icons ",($_GET['module']=='products' ? "white-text" : ""),"'>description</i>จัดการข้อมูลสินค้า</a></li>";
+        echo "<li class='",($_GET['module']=='categories' ? "activeadmin" : ""),"'><a href='index.php?module=categories&action=manage_categories' class='waves-effect waves-teal'><i class='material-icons ",($_GET['module']=='categories' ? "white-text" : ""),"'>list</i>จัดการข้อมูลหมวดหมู่</a></li>";
+        echo "<li class='",($_GET['module']=='user' ? "activeadmin" : ""),"'><a href='index.php?module=user&action=manage_user' class='waves-effect waves-teal'><i class='material-icons ",($_GET['module']=='user' ? "white-text" : ""),"'>person_pin</i>จัดการข้อมูลผู้ใช้</a></li>";
+        echo "<li class='",($_GET['module']=='user' && $_GET['action']=='logout' ? "activeadmin" : ""),"'  style='bottom: 0;background-color: #e53935 ;position: absolute;width:100%'><a href='index.php?module=user&action=logout' class='waves-effect waves-yellow white-text left-align'><i class='material-icons white-text'>exit_to_app</i>ออกจากระบบ</a></li>";
+    }
+
+    function member_menu(){
+        echo "<h4 class='center-align' style='color:#26c6da;'>เมนูสมาชิก</h4>";
+        echo "<li><div class='user-view'>
+        <div class='background' style='background-color:#26c6da;'>
+        </div>
+        <i class='large material-icons center-align' style='font-size:3.5rem !important;color:#757575;'>person</i>
+        <span class='white-text center-align name'>สวัสดีครับคุณ ".(isset($_SESSION['valid_login']) ? $_SESSION['valid_login'] : "")."</span>
+        <span class='white-text center-align email'>สถานะของคุณคือ ".(isset($_SESSION['user_type']) && $_SESSION['user_type'] == 0 ? "ผู้ดูแลระบบ" : "ผู้ใช้งานระบบ")."</span>
+    </div></li>";
+        echo "<li class='",(empty($_GET['module']) ? "activemember" : ""),"'><a href='index.php' class='waves-effect waves-cyan'><i class='material-icons ",(empty($_GET['module']) ? "white-text" : ""),"'>home</i>หน้าหลัก</a></li>";
+        echo "<li class='",($_GET['module']=='user' ? "activemember" : ""),"'><a href='index.php?module=user&action=edit_profile_form' class='waves-effect waves-cyan'><i class='material-icons ",($_GET['module']=='user' ? "white-text" : ""),"'>person</i>จัดการข้อมูลส่วนตัว</a></li>";
+        echo "<li class='",($_GET['module']=='products' ? "activemember" : ""),"'><a href='index.php?module=products&action=select_product' class='waves-effect waves-cyan'><i class='material-icons ",($_GET['module']=='products' ? "white-text" : ""),"'>description</i>แสดงข้อมูลสินค้า</a></li>";
+        echo "<li class='",($_GET['module']=='categories' ? "activemember" : ""),"'><a href='index.php?module=categories&action=list_categories' class='waves-effect waves-cyan'><i class='material-icons ",($_GET['module']=='categories' ? "white-text" : ""),"'>list</i>หมวดหมู่สินค้า</a></li>";
+        echo "<li class='",($_GET['module']=='user' && $_GET['action']=='logout' ? "activeadmin" : ""),"' style='bottom: 0;background-color: #e53935 ;position: absolute;width:100%;'><a href='index.php?module=user&action=logout' class='waves-effect waves-yellow white-text left-align'><i class='material-icons white-text'>exit_to_app</i>ออกจากระบบ</a></li>";
+    }
+
+    function user_menu(){
+        echo "<h4 class='center-align' style='color:#ee6e73;'>เมนูผู้ใช้ทั่วไป</h4>";
+        echo "<li class='",(empty($_GET['module']) ? "active" : ""),"'><a href='index.php' class='waves-effect waves-red'><i class='material-icons ",(empty($_GET['module']) ? "white-text" : ""),"'>home</i>หน้าหลัก</a></li>";
+        echo "<li class='",($_GET['module']=='products' ? "active" : ""),"'><a href='index.php?module=products&action=select_product' class='waves-effect waves-red'><i class='material-icons ",($_GET['module']=='products' ? "white-text" : ""),"'>description</i>แสดงข้อมูลสินค้า</a></li>";
+        echo "<li class='",($_GET['module']=='categories' ? "active" : ""),"'><a href='index.php?module=categories&action=list_categories' class='waves-effect waves-red'><i class='material-icons ",($_GET['module']=='categories' ? "white-text" : ""),"' >list</i>หมวดหมู่สินค้า</a></li>";
+    }
+?>

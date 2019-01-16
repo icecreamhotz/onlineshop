@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Login Form</title>
+    <style>
+        .form-container{
+            padding: 20px;
+        }
+        .form-input{
+            margin-bottom:50px;
+        }
+        .waves-effect input[type="submit"],.waves-effect input[type="reset"]{
+            margin:10px;
+        }
+    </style>
+</head>
+<body>
+        <ul class="tabs teal">
+            <li class="tab col s6"><a class="white-text active" href="#login">ล็อคอิน</a></li>
+            <li id="tab2click" class="tab col s6 tab2bg"><a class="white-text" href="#register">สมัครสมาชิก</a></li>
+        </ul>
+        <div id="login" class="col s12">
+            <form method="post" action="index.php?module=user&action=check_login" class="col s12">
+                    <div class="form-container" style="padding-top:50px;">
+                        <h5 class="teal-text center-align" style="margin:0 0 45px 0;">กรุณากรอกข้อมูลที่ถูกต้อง!!!</h5>
+                        <div class="form-input">
+                            <div class="row">
+                                <div class="input-field col s9 push-s1">
+                                    <i class="material-icons prefix">face</i>
+                                    <input type="text" name="txt_usName" class="validate" data-length="10" maxlength="10" required>
+                                    <label for="username">ชื่อผู้ใช้งาน</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s9 push-s1">
+                                    <i class="material-icons prefix">https</i>
+                                    <input type="password" name="txt_usPswd" class="validate" data-length="10" maxlength="10" required>
+                                    <label for="password">รหัสผ่าน</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row center-align">
+                            <input type="submit" name="submit" value="เข้าสู่ระบบ" class="btn waves-effect waves-teal" style='padding-bottom:50px;'>
+                            <input type="reset" name="reset" value="ยกเลิก" class="btn waves-effect waves-teal" style='padding-bottom:50px;'>
+                        </div>
+                    </div>
+            </form>
+        </div>
+        <div id="register" class="col s12">
+            <form method="post" action="index.php?module=user&action=save_register" class="col s12">
+                <div class="form-container" style="padding-top:50px;">
+                    <h5 class="pink-text center-align" style="margin:0 0 45px 0;">กรุณากรอกข้อมูลให้ครบ!!!</h5>
+                    <div class="form-input">
+                        <div class="row">
+                            <div class="input-field col register-field s9 push-s1">
+                                <i class="material-icons prefix prefix2">face</i>
+                                <input type="text" name="txt_usName" class="validate" data-length="10" maxlength="10" required>
+                                <label for="username">ชื่อผู้ใช้งาน</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col register-field s9 push-s1">
+                                <i class="material-icons prefix prefix2">https</i>
+                                <input type="password" name="txt_usPswd" class="validate" data-length="10" maxlength="10" required> 
+                                <label for="password">รหัสผ่าน</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row center-align">
+                        <input type="submit" name="submit" value="สมัครสมาชิก" class="btn waves-effect waves-yellow" style="background-color:#ea9699;padding-bottom:50px;">
+                        <input type="reset" name="reset" value="ยกเลิก" class="btn waves-effect waves-yellow" style="background-color:#ea9699;padding-bottom:50px;">
+                    </div>
+                </div>
+            </form>
+        </div>   
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../js/materialize.min.js"></script>
+</body>
+</html>
